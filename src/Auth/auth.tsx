@@ -1,12 +1,12 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Auth } from 'aws-amplify';
+import React, { FC, useState, ChangeEvent, FormEvent } from "react";
+import { useHistory } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 const SignInContainer: FC = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  })
+    username: "",
+    password: "",
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -14,7 +14,7 @@ const SignInContainer: FC = () => {
       ...formData,
       [name]: value,
     });
-  }
+  };
 
   const history = useHistory();
 
@@ -26,16 +26,27 @@ const SignInContainer: FC = () => {
       password,
     }).then(() => {
       history.push(`/confirmation?email=${username}`);
-    })
-  }  
+    });
+  };
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <input name="username" onChange={(e) => handleChange(e)} value={formData.username} type="email" />
-      <input name="password" onChange={(e) => handleChange(e)} value={formData.password} type="password" />
+      <h1>Sign Up</h1>
+      <input
+        name="username"
+        onChange={(e) => handleChange(e)}
+        value={formData.username}
+        type="email"
+      />
+      <input
+        name="password"
+        onChange={(e) => handleChange(e)}
+        value={formData.password}
+        type="password"
+      />
       <button type="submit">Submit</button>
     </form>
-  )  
-}
+  );
+};
 
 export default SignInContainer;
