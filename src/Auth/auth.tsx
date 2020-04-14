@@ -37,12 +37,14 @@ const SignInContainer: FC = () => {
         onChange={(e) => handleChange(e)}
         value={formData.username}
         type="email"
+        placeholder="Email"
       />
       <input
         name="password"
         onChange={(e) => handleChange(e)}
         value={formData.password}
         type="password"
+        placeholder="Password"
       />
       <button type="submit">Submit</button>
     </form>

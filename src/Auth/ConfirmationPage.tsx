@@ -30,6 +30,7 @@ const ConfirmationPage: FC = () => {
         onChange={(e) => handleChange(e)}
         value={confirmationCode}
         type="text"
+        placeholder="Confirmation Code"
       />
       <button type="submit">Submit</button>
     </form>
