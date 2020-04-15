@@ -34,6 +34,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url('/manhattan-darker.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .central {
@@ -41,6 +45,8 @@ body {
     display: flex;
     flex-direction: column;
     color: #131313;
+    /*background-color: rgba(19, 19, 19, 0.95);*/
+    padding: 20px;
 }
 
 h1 {

@@ -1,6 +1,7 @@
 node_modules
 aws-exports.js
 .idea
+*.DS_Store*
 
 #amplify
 amplify/
