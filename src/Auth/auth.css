@@ -1,0 +1,81 @@
+/* latin-ext */
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Teko Medium'), local('Teko-Medium'), url(https://fonts.gstatic.com/s/teko/v9/LYjCdG7kmE0gdVBesCpgqHAtXN_nWQ.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Teko Medium'), local('Teko-Medium'), url(https://fonts.gstatic.com/s/teko/v9/LYjCdG7kmE0gdVBesCRgqHAtXN8.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    color: #EEE1C8;
+    font-family: 'Teko';
+    cursor: default;
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-color: #131313;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.central {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    color: #131313;
+}
+
+h1 {
+    font-size: 50px;
+    color: #EDDDC1;
+}
+
+.top {
+    display: flex;
+    justify-content: center;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.split {
+    border: 1px solid rgba(252, 197, 70, 1);
+    color: rgba(252, 197, 70, 1);
+    border-radius: 2px;
+    height: 100%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    padding: 4px;
+    transition: 0.2s;
+}
+
+.split:hover {
+    cursor: pointer;
+    color: rgba(252, 197, 70, 0.8);
+    border: 1px solid rgba(252, 197, 70, 0.8);
+}
