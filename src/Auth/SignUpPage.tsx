@@ -1,29 +1,13 @@
 import React, { FC } from 'react';
-import './auth.css'
 
-const LandingPage: FC = () => {
+const SignUp: FC = () => {
+
   return (
-      <div className='hero'>
-        <div className='central'>
-          <div className='top'>
-            <h1>Bookable</h1>
-          </div>
-
-          <div className='bottom'>
-            <div className='split'>
-              LOG IN
-            </div>
-            <div className='split'>
-              SIGN UP
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <h1>Sign up</h1>
   )
 }
 
-export default LandingPage;
+export default SignUp;
 
 // const SignInContainer: FC = () => {
 //   const [formData, setFormData] = useState({
