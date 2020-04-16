@@ -15,6 +15,7 @@ const Routes = () => {
         <Route path="/confirmation" exact component={ConfirmationPage} />
         <Route path="/login" exact component={LoginPage} />
         <Route path="/signup" exact component={SignUp} />
+        {/* <Route path="/dashboard" exact component={Dashboard} /> feel free to uncomment for development */}
         <ProtectedRoute path="/dashboard" exact component={Dashboard} />
       </Switch>
     </BrowserRouter>
