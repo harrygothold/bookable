@@ -1,0 +1,58 @@
+.hero {
+  color: #eee1c8;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-color: #131313;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/manhattan-darker.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .central {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    color: #131313;
+    /*background-color: rgba(19, 19, 19, 0.95);*/
+    padding: 20px;
+  }
+
+  .landing-page-heading {
+    font-size: 50px;
+    color: #edddc1;
+  }
+
+  .top {
+    display: flex;
+    justify-content: center;
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .split {
+    border: 1px solid rgba(252, 197, 70, 1);
+    color: rgba(252, 197, 70, 1);
+    border-radius: 2px;
+    height: 100%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    padding: 4px;
+    transition: 0.2s;
+    &:hover {
+      cursor: pointer;
+      color: rgba(252, 197, 70, 0.8);
+      border: 1px solid rgba(252, 197, 70, 0.8);
+    }
+  }
+}

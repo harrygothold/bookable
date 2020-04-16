@@ -1,61 +1,72 @@
-import React, { FC } from 'react';
+import React, { FC, useState, ChangeEvent, FormEvent } from "react";
+import { useHistory } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import Error from "../components/Error";
 
-const SignUp: FC = () => {
-
-  return (
-      <h1>Sign up</h1>
-  )
+interface FormData {
+  username: string;
+  password: string;
 }
 
-export default SignUp;
+const SignInContainer: FC = () => {
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormData>({
+    username: "",
+    password: "",
+  });
 
-// const SignInContainer: FC = () => {
-//   const [formData, setFormData] = useState({
-//     username: "",
-//     password: "",
-//   });
-//
-//   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     const { value, name } = e.target;
-//     setFormData({
-//       ...formData,
-//       [name]: value,
-//     });
-//   };
-//
-//   const history = useHistory();
-//
-//   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-//     const { username, password } = formData;
-//     e.preventDefault();
-//     Auth.signUp({
-//       username,
-//       password,
-//     }).then(() => {
-//       history.push(`/confirmation?email=${username}`);
-//     });
-//   };
-//
-//   return (
-//     <form onSubmit={(e) => handleSubmit(e)}>
-//       <h1>Sign Up</h1>
-//       <input
-//         name="username"
-//         onChange={(e) => handleChange(e)}
-//         value={formData.username}
-//         type="email"
-//         placeholder="Email"
-//       />
-//       <input
-//         name="password"
-//         onChange={(e) => handleChange(e)}
-//         value={formData.password}
-//         type="password"
-//         placeholder="Password"
-//       />
-//       <button type="submit">Submit</button>
-//     </form>
-//   );
-// };
-//
-// export default SignInContainer;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const history = useHistory();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    const { username, password } = formData;
+    e.preventDefault();
+    try {
+      const response = await Auth.signUp({
+        username,
+        password,
+      });
+      if (response) {
+        history.push(`/confirmation?email=${username}`);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={(e) => handleSubmit(e)}>
+      <h1>Sign Up</h1>
+      {error && <Error error={error} />}
+      {loading && <p>Loading...</p>}
+      <input
+        name="username"
+        onChange={(e) => handleChange(e)}
+        value={formData.username}
+        type="email"
+        placeholder="Email"
+      />
+      <input
+        name="password"
+        onChange={(e) => handleChange(e)}
+        value={formData.password}
+        type="password"
+        placeholder="Password"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default SignInContainer;

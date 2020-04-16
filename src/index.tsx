@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Routes from './routerConfig';
-import * as serviceWorker from './serviceWorker';
-import Amplify from '@aws-amplify/core';
-import config from './aws-exports'
-Amplify.configure(config)
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.scss";
+import Routes from "./routerConfig";
+import * as serviceWorker from "./serviceWorker";
+import Amplify from "@aws-amplify/core";
+import config from "./aws-exports";
+Amplify.configure(config);
 
 ReactDOM.render(
   <React.StrictMode>
     <Routes />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

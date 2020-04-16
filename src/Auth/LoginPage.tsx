@@ -1,9 +1,17 @@
 import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import Error from "../components/Error";
+
+interface LoginData {
+  username: string;
+  password: string;
+}
 
 const LoginPage: FC = () => {
-  const [formData, setFormData] = useState({
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [formData, setFormData] = useState<LoginData>({
     username: "",
     password: "",
   });
@@ -18,20 +26,29 @@ const LoginPage: FC = () => {
 
   const history = useHistory();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     const { username, password } = formData;
+    setLoading(true);
+    setError("");
     e.preventDefault();
-    Auth.signIn({
-      username,
-      password,
-    }).then((user) => {
-      // add type here
-      localStorage.setItem(
-        "token",
-        user.signInUserSession.accessToken.jwtToken
-      );
-      history.push("/dashboard");
-    });
+    try {
+      const response = await Auth.signIn({
+        username,
+        password,
+      });
+      if (response) {
+        setLoading(false);
+        localStorage.setItem(
+          "token",
+          response.signInUserSession.accessToken.jwtToken
+        );
+        history.push("/dashboard");
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const location = useLocation();
@@ -39,8 +56,10 @@ const LoginPage: FC = () => {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <h1>Sign Up</h1>
+      <h1>Sign In</h1>
       {isRedirect && <p>You must be logged in to view this page</p>}
+      {loading && <p>Loading...</p>}
+      {error && <Error error={error} />}
       <input
         name="username"
         onChange={(e) => handleChange(e)}
