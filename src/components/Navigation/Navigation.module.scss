@@ -1,0 +1,57 @@
+.nav {
+  height: 70px;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  background: white;
+  position: fixed;
+  box-shadow: 1px 7px 9px -3px hsla(0, 0%, 54.1%, 0.5);
+  &-links {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    li {
+      margin: 0 30px;
+      font-size: 20px;
+      a {
+        color: black;
+        transition: color 0.3s ease-in-out;
+        text-decoration: none;
+      }
+      &::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 3px;
+        background: #fcc546;
+        transition: width 0.3s ease-in-out;
+      }
+      &:hover {
+        a {
+          color: #fcc546;
+        }
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .signout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 20%;
+    button {
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px 10px;
+      background: transparent;
+      border: 1px solid black;
+      &:hover {
+        border: 1px solid transparent;
+        background: #fcc546;
+      }
+    }
+  }
+}

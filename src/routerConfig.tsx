@@ -6,10 +6,12 @@ import Dashboard from "./Dashboard/Dashboard";
 import LandingPage from "./Landing/Landing";
 import SignUp from "./Auth/SignUpPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Navigation from "./components/Navigation";
 
 const Routes = () => {
   return (
     <BrowserRouter>
+      <Navigation />
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/confirmation" exact component={ConfirmationPage} />
