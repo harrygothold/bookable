@@ -1,10 +1,11 @@
 import React, { FC, useState, ChangeEvent, FormEvent } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Error from "../components/Error";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import Loading from "../components/Loading";
+import Classes from "./FormHolder.module.scss";
 
 interface LoginData {
   username: string;
@@ -58,31 +59,56 @@ const LoginPage: FC = () => {
   const isRedirect = !!location.search.split("=")[1];
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <h1>Sign In</h1>
-      {isRedirect && <Alert severity='warning'>
-        <AlertTitle>Warning!</AlertTitle>
-        You must be logged in to view this page
-        </Alert>
-        }
-        <Loading loading={loading} />
-      {error && <Error error={error} errorTitle='Authentication Error' />}
-      <input
-        name="username"
-        onChange={(e) => handleChange(e)}
-        value={formData.username}
-        type="email"
-        placeholder="Email"
-      />
-      <input
-        name="password"
-        onChange={(e) => handleChange(e)}
-        value={formData.password}
-        type="password"
-        placeholder="Password"
-      />
-      <button type="submit">Submit</button>
-    </form>
+  <div className={Classes.container}>
+    <div className={Classes['sign-in-header']}>
+    <div className={Classes['sign-up-link']}>
+        <h2>
+          <a href="/signup">
+            NEW TO BOOKABLE?
+          </a>
+        </h2>
+      </div>
+      <div className={Classes['currently-selected']}>
+        <h2>ALREADY REGISTERED?</h2>
+      </div>
+  </div>
+    <h1>SIGN IN WITH EMAIL</h1>
+    <div className={Classes['form-holder']}>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        {isRedirect && <Alert severity='warning'>
+          <AlertTitle>Warning!</AlertTitle>
+          You must be logged in to view this page
+          </Alert>
+          }
+          <Loading loading={loading} />
+        {error && <Error error={error} errorTitle='Authentication Error' />}
+        <label>EMAIL ADDRESS</label>
+        <div className={Classes.field}>
+          <input
+            name="username"
+            onChange={(e) => handleChange(e)}
+            value={formData.username}
+            type="email"
+            placeholder="Email"
+          />
+        </div>
+        <label>PASSWORD</label>
+        <div className={Classes.field}>
+          <input
+            name="password"
+            onChange={(e) => handleChange(e)}
+            value={formData.password}
+            type="password"
+            placeholder="Password"
+          />
+        </div>
+        <div className={Classes['button-holder']}>
+          <button className={Classes['submit-button']} type="submit">SIGN IN</button>
+          <Link className={Classes['forgot-password']}to="/forgotpassword">Forgot Password?</Link>
+        </div>
+      </form>
+      </div>
+  </div>
   );
 };
 
