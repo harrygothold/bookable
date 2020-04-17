@@ -2,6 +2,7 @@ import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Error from "../components/Error";
+import Loading from "../components/Loading";
 
 interface FormData {
   username: string;
@@ -48,8 +49,8 @@ const SignInContainer: FC = () => {
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <h1>Sign Up</h1>
-      {error && <Error error={error} />}
-      {loading && <p>Loading...</p>}
+      {error && <Error error={error} errorTitle='Authentication Error' />}
+      <Loading loading={loading} />
       <input
         name="username"
         onChange={(e) => handleChange(e)}

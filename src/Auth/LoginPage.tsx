@@ -2,6 +2,9 @@ import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Error from "../components/Error";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
+import Loading from "../components/Loading";
 
 interface LoginData {
   username: string;
@@ -57,9 +60,13 @@ const LoginPage: FC = () => {
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <h1>Sign In</h1>
-      {isRedirect && <p>You must be logged in to view this page</p>}
-      {loading && <p>Loading...</p>}
-      {error && <Error error={error} />}
+      {isRedirect && <Alert severity='warning'>
+        <AlertTitle>Warning!</AlertTitle>
+        You must be logged in to view this page
+        </Alert>
+        }
+        <Loading loading={loading} />
+      {error && <Error error={error} errorTitle='Authentication Error' />}
       <input
         name="username"
         onChange={(e) => handleChange(e)}

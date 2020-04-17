@@ -2,6 +2,7 @@ import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Error from "../components/Error";
+import Loading from "../components/Loading";
 
 const ConfirmationPage: FC = () => {
   const [error, setError] = useState<string>("");
@@ -35,8 +36,8 @@ const ConfirmationPage: FC = () => {
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <h1>Confirm Your Email Address</h1>
-      {error && <Error error={error} />}
-      {loading && <p>Loading...</p>}
+      {error && <Error error={error} errorTitle='Oops' />}
+      <Loading loading={loading} />
       <input
         name="confirmationCode"
         onChange={(e) => handleChange(e)}
