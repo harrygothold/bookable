@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 .container {
   position: fixed;
   top: 35px;
@@ -27,9 +29,9 @@
 
   span {
     width: 40px;
-    height: 5px;
-    margin: 5px;
-    background: black;
+    height: $spacing-extra-small;
+    margin: $spacing-extra-small;
+    background: $brand-dark;
     transition: all 0.6s;
   }
 }

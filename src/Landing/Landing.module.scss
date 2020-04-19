@@ -1,9 +1,11 @@
+@import '../styles/variables.scss';
+
 .hero {
   color: #eee1c8;
   position: relative;
   height: 100vh;
   width: 100vw;
-  background-color: #131313;
+  background-color: $brand-dark;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,9 +17,8 @@
     width: 40%;
     display: flex;
     flex-direction: column;
-    color: #131313;
-    /*background-color: rgba(19, 19, 19, 0.95);*/
-    padding: 20px;
+    color: $brand-dark;
+    padding: $spacing-large;
   }
 
   .landing-page-heading {
@@ -33,12 +34,12 @@
   .bottom {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: $spacing-large;
   }
 
   .split {
-    border: 1px solid #fcc546;
-    color: #fcc546;
+    border: 1px solid $brand-primary;
+    color: $brand-primary;
     border-radius: 2px;
     height: 100%;
     width: 20%;
@@ -48,11 +49,11 @@
     text-align: center;
     font-size: 30px;
     padding: 4px;
-    transition: 0.2s;
+    transition: all 0.2s;
     &:hover {
       cursor: pointer;
-      color: rgba(252, 197, 70, 0.8);
-      border: 1px solid rgba(252, 197, 70, 0.8);
+      color: $brand-primary-dark;
+      border: 1px solid $brand-primary-dark;
     }
   }
 }

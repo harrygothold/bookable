@@ -1,5 +1,7 @@
+@import '../styles/variables.scss';
+
 :global(.MuiPaper-elevation0) {
-  margin-bottom: 20px;
+  margin-bottom: $spacing-large;
 }
 .container {
   display: flex;
@@ -12,7 +14,7 @@
 
   .sign-in-header {
     display: flex;
-    padding: 25px 20px 15px;
+    padding: $spacing-extra-large $spacing-large $spacing-medium;
 
     div {
       display: flex;
@@ -20,20 +22,20 @@
       font-size: 14px;
       width: 50%;
       justify-content: center;
-      padding: 20px 0 20px;
+      padding: $spacing-large 0 $spacing-large;
 
       &:hover {
-        color: #fcc546;
+        color: $brand-primary;
         cursor: pointer;
         transition: all 0.3s ease-in;
       }
     }
 
     .currently-selected {
-      border: 1px solid #767676;
+      border: 1px solid $brand-grey-light;
       border-bottom: 0;
       &:hover {
-        border: 1px solid #fcc546;
+        border: 1px solid $brand-primary;
         border-bottom: 0;
         transition: all 0.3s ease-in;
       }
@@ -41,16 +43,16 @@
     .sign-up-link {
       a {
         text-decoration: none;
-        color: #000;
+        color: $brand-dark;
 
         &:hover {
-          color: #fcc546;
+          color: $brand-primary;
           transition: all 0.3s ease-in;
         }
       }
-      border-bottom: 1px solid #767676;
+      border-bottom: 1px solid $brand-grey-light;
       &:hover {
-        border-bottom: 1px solid #fcc546;
+        border-bottom: 1px solid $brand-primary;
         transition: all 0.3s ease-in;
       }
     }
@@ -58,14 +60,14 @@
 
   h1 {
     text-align: center;
-    margin: 20px 0;
+    margin: $spacing-large 0;
     letter-spacing: 2px;
   }
 
   .form-holder {
     display: flex;
     flex-direction: column;
-    margin: 15px auto auto auto;
+    margin: $spacing-medium auto auto auto;
     width: 63%;
 
     .field {
@@ -74,7 +76,7 @@
       flex-direction: row;
 
       .username {
-        border: 1px solid #767676;;
+        border: 1px solid $brand-grey-light;
       }
 
       .toggle-password {
@@ -82,7 +84,7 @@
        border: 0;
        margin: 0;
        height: 45px;
-       border: 1px solid #767676;
+       border: 1px solid $brand-grey-light;
        background-color: #E8F0FE;
        font-style: normal;
        font-weight: 700;
@@ -96,16 +98,16 @@
       }
 
       input {
-        padding-right: 20px;
+        padding-right: $spacing-large;
         height: 45px;
         font-size: 14px;
         letter-spacing: .4px;
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: $spacing-large;
         outline: 0;
-        border-top: 1px solid #767676;
-        border-bottom: 1px solid #767676;
-        border-left: 1px solid #767676;
+        border-top: 1px solid $brand-grey-light;
+        border-bottom: 1px solid $brand-grey-light;
+        border-left: 1px solid $brand-grey-light;
         padding: 0 10px;
       }
     }
@@ -121,19 +123,19 @@
       width: 55%;
       background: #2d2d2d;
       color: #fff;
-      margin-bottom: 20px;
+      margin-bottom: $spacing-large;
       &:hover {
         cursor: pointer;
-        color: #fcc546;
+        color: $brand-primary;
         transition: all 0.3s ease-in;
       }
     }
     .forgot-password {
-      color: #000;
+      color: $brand-dark;
 
       &:hover {
         cursor: pointer;
-        color: #fcc546;
+        color: $brand-primary;
         transition: all 0.3s ease-in;
       }
     }
