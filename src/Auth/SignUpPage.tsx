@@ -12,7 +12,7 @@ interface FormData {
 
 const SignInContainer: FC = () => {
   const [error, setError] = useState<string>("");
-  const [isPasswordVisible, setIsPasswordVisible ] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible ] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
     username: "",
@@ -28,9 +28,7 @@ const SignInContainer: FC = () => {
   };
 
   const togglePasswordVisibility = () => {
-    console.log('wfwip');
     setIsPasswordVisible(!isPasswordVisible);
-    console.log(isPasswordVisible);
   }
 
   const history = useHistory();
@@ -91,6 +89,7 @@ const SignInContainer: FC = () => {
           onChange={(e) => handleChange(e)}
           value={formData.password}
           type={isPasswordVisible ? 'text' : 'password'}
+          placeholder="Password"
         />
         <button className={Classes['toggle-password']}type="button" onClick={togglePasswordVisibility}>{isPasswordVisible ? 'HIDE' : 'SHOW'}</button>
 

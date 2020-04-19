@@ -14,6 +14,7 @@ interface LoginData {
 
 const LoginPage: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [isPasswordVisible, setIsPasswordVisible ] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [formData, setFormData] = useState<LoginData>({
     username: "",
@@ -27,6 +28,10 @@ const LoginPage: FC = () => {
       [name]: value,
     });
   };
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  }
 
   const history = useHistory();
 
@@ -85,6 +90,7 @@ const LoginPage: FC = () => {
         <label>Email Address:</label>
         <div className={Classes.field}>
           <input
+            className={Classes.username}
             name="username"
             onChange={(e) => handleChange(e)}
             value={formData.username}
@@ -98,9 +104,10 @@ const LoginPage: FC = () => {
             name="password"
             onChange={(e) => handleChange(e)}
             value={formData.password}
-            type="password"
+            type={isPasswordVisible ? 'text' : 'password'}
             placeholder="Password"
           />
+          <button className={Classes['toggle-password']}type="button" onClick={togglePasswordVisibility}>{isPasswordVisible ? 'HIDE' : 'SHOW'}</button>
         </div>
         <div className={Classes['button-holder']}>
           <button className={Classes['submit-button']} type="submit">SIGN IN</button>
