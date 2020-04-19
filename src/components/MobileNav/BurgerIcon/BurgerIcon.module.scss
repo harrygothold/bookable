@@ -1,0 +1,35 @@
+.container {
+  position: fixed;
+  top: 35px;
+  left: 10px;
+  transition: left 1.4s;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 530px) {
+    display: none;
+  }
+  &.toggled {
+    span {
+      background: white;
+      &:nth-child(1) {
+        transform: rotate(-405deg) translate(-5px, 6px);
+      }
+      &:nth-child(3) {
+        transform: rotate(405deg) translate(-4px, -6px);
+      }
+      &:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+
+  span {
+    width: 40px;
+    height: 5px;
+    margin: 5px;
+    background: black;
+    transition: all 0.6s;
+  }
+}

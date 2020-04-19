@@ -1,4 +1,7 @@
 .nav {
+  @media (max-width: 530px) {
+    display: none;
+  }
   height: 70px;
   width: 100%;
   padding: 20px;
