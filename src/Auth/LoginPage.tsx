@@ -82,7 +82,7 @@ const LoginPage: FC = () => {
           }
           <Loading loading={loading} />
         {error && <Error error={error} errorTitle='Authentication Error' />}
-        <label>EMAIL ADDRESS</label>
+        <label>Email Address:</label>
         <div className={Classes.field}>
           <input
             name="username"
@@ -92,7 +92,7 @@ const LoginPage: FC = () => {
             placeholder="Email"
           />
         </div>
-        <label>PASSWORD</label>
+        <label>Password:</label>
         <div className={Classes.field}>
           <input
             name="password"
@@ -107,7 +107,7 @@ const LoginPage: FC = () => {
           <Link className={Classes['forgot-password']}to="/forgotpassword">Forgot Password?</Link>
         </div>
       </form>
-      </div>
+    </div>
   </div>
   );
 };

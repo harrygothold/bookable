@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
+import Classes from './FormHolder.module.scss';
 
 interface FormData {
   username: string;
@@ -47,26 +48,50 @@ const SignInContainer: FC = () => {
   };
 
   return (
+  <div className={Classes.container}>
+    <div className={Classes['sign-in-header']}>
+    <div className={Classes['currently-selected']}>
+      <h2>NEW TO BOOKABLE?</h2>
+    </div>
+    <div className={Classes['sign-up-link']}>
+    <h2>
+      <a href="/login">
+        ALREADY REGISTERED?
+      </a>
+    </h2>
+  </div>
+</div>
+  <h1>SIGN UP USING YOUR EMAIL ADDRESS</h1>
+  <div className={Classes['form-holder']}>
     <form onSubmit={(e) => handleSubmit(e)}>
-      <h1>Sign Up</h1>
       {error && <Error error={error} errorTitle='Authentication Error' />}
       <Loading loading={loading} />
-      <input
-        name="username"
-        onChange={(e) => handleChange(e)}
-        value={formData.username}
-        type="email"
-        placeholder="Email"
-      />
-      <input
-        name="password"
-        onChange={(e) => handleChange(e)}
-        value={formData.password}
-        type="password"
-        placeholder="Password"
-      />
-      <button type="submit">Submit</button>
-    </form>
+      <label>Email Address:</label>
+      <div className={Classes.field}>
+        <input
+          name="username"
+          onChange={(e) => handleChange(e)}
+          value={formData.username}
+          type="email"
+          placeholder="Email"
+        />
+      </div>
+      <label>Password:</label>
+      <div className={Classes.field}>
+        <input
+          name="password"
+          onChange={(e) => handleChange(e)}
+          value={formData.password}
+          type="password"
+          placeholder="Password"
+        />
+      </div>
+      <div className={Classes['button-holder']}>
+        <button className={Classes['submit-button']} type="submit">SIGN UP</button>
+      </div>
+      </form>
+    </div>
+  </div>
   );
 };
 
