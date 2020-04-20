@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from "react";
+import React, { FC, useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Error from "../components/Error";
@@ -14,7 +14,7 @@ interface LoginData {
 
 const LoginPage: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [isPasswordVisible, setIsPasswordVisible ] = useState<boolean>(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [formData, setFormData] = useState<LoginData>({
     username: "",
@@ -31,7 +31,7 @@ const LoginPage: FC = () => {
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
-  }
+  };
 
   const history = useHistory();
 
@@ -63,59 +63,75 @@ const LoginPage: FC = () => {
   const location = useLocation();
   const isRedirect = !!location.search.split("=")[1];
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      history.push("/dashboard");
+    }
+  }, []);
+
   return (
-  <div className={Classes.container}>
-    <div className={Classes['sign-in-header']}>
-    <div className={Classes['sign-up-link']}>
-        <h2>
-          <a href="/signup">
-            NEW TO BOOKABLE?
-          </a>
-        </h2>
+    <div className={Classes.container}>
+      <div className={Classes["sign-in-header"]}>
+        <div className={Classes["sign-up-link"]}>
+          <h2>
+            <a href="/signup">NEW TO BOOKABLE?</a>
+          </h2>
+        </div>
+        <div className={Classes["currently-selected"]}>
+          <h2>ALREADY REGISTERED?</h2>
+        </div>
       </div>
-      <div className={Classes['currently-selected']}>
-        <h2>ALREADY REGISTERED?</h2>
-      </div>
-  </div>
-    <h1>SIGN IN WITH EMAIL</h1>
-    <div className={Classes['form-holder']}>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        {isRedirect && <Alert severity='warning'>
-          <AlertTitle>Warning!</AlertTitle>
-          You must be logged in to view this page
-          </Alert>
-          }
+      <h1>SIGN IN WITH EMAIL</h1>
+      <div className={Classes["form-holder"]}>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          {isRedirect && (
+            <Alert severity="warning">
+              <AlertTitle>Warning!</AlertTitle>
+              You must be logged in to view this page
+            </Alert>
+          )}
           <Loading loading={loading} />
-        {error && <Error error={error} errorTitle='Authentication Error' />}
-        <label>Email Address:</label>
-        <div className={Classes.field}>
-          <input
-            className={Classes.username}
-            name="username"
-            onChange={(e) => handleChange(e)}
-            value={formData.username}
-            type="email"
-            placeholder="Email"
-          />
-        </div>
-        <label>Password:</label>
-        <div className={Classes.field}>
-          <input
-            name="password"
-            onChange={(e) => handleChange(e)}
-            value={formData.password}
-            type={isPasswordVisible ? 'text' : 'password'}
-            placeholder="Password"
-          />
-          <button className={Classes['toggle-password']}type="button" onClick={togglePasswordVisibility}>{isPasswordVisible ? 'HIDE' : 'SHOW'}</button>
-        </div>
-        <div className={Classes['button-holder']}>
-          <button className={Classes['submit-button']} type="submit">SIGN IN</button>
-          <Link className={Classes['forgot-password']}to="/forgotpassword">Forgot Password?</Link>
-        </div>
-      </form>
+          {error && <Error error={error} errorTitle="Authentication Error" />}
+          <label>Email Address:</label>
+          <div className={Classes.field}>
+            <input
+              className={Classes.username}
+              name="username"
+              onChange={(e) => handleChange(e)}
+              value={formData.username}
+              type="email"
+              placeholder="Email"
+            />
+          </div>
+          <label>Password:</label>
+          <div className={Classes.field}>
+            <input
+              name="password"
+              onChange={(e) => handleChange(e)}
+              value={formData.password}
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="Password"
+            />
+            <button
+              className={Classes["toggle-password"]}
+              type="button"
+              onClick={togglePasswordVisibility}
+            >
+              {isPasswordVisible ? "HIDE" : "SHOW"}
+            </button>
+          </div>
+          <div className={Classes["button-holder"]}>
+            <button className={Classes["submit-button"]} type="submit">
+              SIGN IN
+            </button>
+            <Link className={Classes["forgot-password"]} to="/forgotpassword">
+              Forgot Password?
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
   );
 };
 
