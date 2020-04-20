@@ -1,0 +1,17 @@
+@import "../../styles/variables.scss";
+
+.button {
+  height: 45px;
+  font-size: 18px;
+  background: #2d2d2d;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  &:hover {
+    cursor: pointer;
+    color: $brand-primary;
+    transition: all 0.3s ease-in;
+  }
+}

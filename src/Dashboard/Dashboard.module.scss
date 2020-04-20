@@ -1,0 +1,61 @@
+@import "../styles/variables.scss";
+
+.dashboard {
+  padding-top: 70px;
+  position: relative;
+  button {
+    svg {
+      margin-left: 12px;
+    }
+  }
+}
+.modal_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  padding: $spacing-large;
+  background: $brand-light;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 1px 7px 9px -3px hsla(0, 0%, 54.1%, 0.5);
+  outline: none;
+  h2 {
+    margin: $spacing-small 0;
+  }
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    button {
+      width: 50%;
+    }
+    .field {
+      width: 80%;
+      display: flex;
+      .username {
+        border: 1px solid $brand-grey-light;
+      }
+
+      input {
+        padding-right: $spacing-large;
+        height: 45px;
+        font-size: 14px;
+        letter-spacing: 0.4px;
+        width: 100%;
+        margin-bottom: $spacing-large;
+        outline: 0;
+        border-top: 1px solid $brand-grey-light;
+        border-bottom: 1px solid $brand-grey-light;
+        border-left: 1px solid $brand-grey-light;
+        padding: 0 $spacing-small;
+      }
+    }
+  }
+}
