@@ -33,8 +33,6 @@ const LoginPage: FC = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const history = useHistory();
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     const { username, password } = formData;
     setLoading(true);
@@ -60,6 +58,7 @@ const LoginPage: FC = () => {
     }
   };
 
+  const history = useHistory();
   const location = useLocation();
   const isRedirect = !!location.search.split("=")[1];
 
