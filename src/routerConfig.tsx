@@ -9,6 +9,8 @@ import LandingPage from "./Landing/Landing";
 import SignUp from "./Auth/SignUpPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navigation from "./components/Navigation";
+import Rooms from "./containers/Rooms";
+import Admin from "./containers/Admin";
 
 const Routes = () => {
   return (
@@ -22,6 +24,8 @@ const Routes = () => {
         <Route path="/forgotpassword" exact component={ForgotPasswordPage} />
         <Route path="/reset" exact component={PasswordReset} />
         {/* <Route path="/dashboard" exact component={Dashboard} /> feel free to uncomment for development */}
+        <ProtectedRoute path="/admin" exact component={Admin} />
+        <ProtectedRoute path="/admin/rooms" component={Rooms} />
         <ProtectedRoute path="/dashboard" exact component={Dashboard} />
       </Switch>
     </BrowserRouter>

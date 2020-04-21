@@ -2,6 +2,7 @@ node_modules
 aws-exports.js
 .idea
 *.DS_Store*
+src/config.ts
 
 #amplify
 amplify/

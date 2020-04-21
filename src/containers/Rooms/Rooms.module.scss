@@ -1,0 +1,26 @@
+@import "../../styles/variables.scss";
+
+.rooms_container {
+  padding-top: 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+  .title {
+    margin: 20px 0;
+    font-size: 30px;
+    letter-spacing: 2px;
+  }
+  .filters {
+    display: flex;
+    button {
+      width: 200px;
+      margin-right: 20px;
+      svg {
+        margin-left: 12px;
+      }
+    }
+    :global(.active) {
+      background: $brand-primary;
+      color: white;
+    }
+  }
+}
