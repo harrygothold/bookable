@@ -10,6 +10,7 @@ const Loading: FC<Props> = ({ loading }) => {
   return (
     <Backdrop open={loading}>
       <CircularProgress color="inherit" />
+      <div>Loading...</div>
     </Backdrop>
   );
 };
