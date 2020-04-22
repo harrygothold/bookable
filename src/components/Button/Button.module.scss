@@ -14,4 +14,8 @@
     color: $brand-primary;
     transition: all 0.3s ease-in;
   }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

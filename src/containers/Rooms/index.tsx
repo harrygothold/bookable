@@ -8,12 +8,14 @@ import RoomListItem from "../../components/RoomListItem";
 import { sortAlphabetically } from "../../utils/sortAlphabetically";
 import { IRoom } from "../../utils/interfaces";
 import Button from "../../components/Button";
-import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
+import CreateRoom from "../../components/CreateRoom";
+import Alert from "@material-ui/lab/Alert";
 
 const Rooms: FC = () => {
   const [rooms, setRooms] = useState<IRoom[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<string>("");
+  const [addRoomSubmitted, setAddRoomSubmitted] = useState<boolean>(false);
   API.configure(awsconfig);
 
   const sort = (order: string): void => {
@@ -40,6 +42,15 @@ const Rooms: FC = () => {
     };
     getRooms();
   }, []);
+
+  useEffect(() => {
+    if (addRoomSubmitted) {
+      setTimeout(() => {
+        setAddRoomSubmitted(false);
+      }, 5000);
+    }
+  }, [addRoomSubmitted]);
+
   return (
     <div className={Classes.rooms_container}>
       <Loading loading={loading} />
@@ -59,11 +70,13 @@ const Rooms: FC = () => {
         >
           Sort Z-A
         </Button>
-
-        <Button type="button">
-          Add New Room <MeetingRoomIcon />
-        </Button>
+        <CreateRoom setSubmitted={setAddRoomSubmitted} />
       </div>
+      {addRoomSubmitted && (
+        <Alert className={Classes.success_alert} severity="success">
+          Room Added Successfully
+        </Alert>
+      )}
       {rooms &&
         rooms.map((room: IRoom) => <RoomListItem key={room.id} {...room} />)}
     </div>
