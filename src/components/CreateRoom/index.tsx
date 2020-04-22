@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from "react";
+import React, { FC, useState, ChangeEvent, FormEvent, useEffect } from "react";
 import Button from "../Button";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import Modal from "@material-ui/core/Modal";
@@ -6,6 +6,8 @@ import Classes from "./CreateRoom.module.scss";
 import API, { graphqlOperation } from "@aws-amplify/api";
 import { createRoom } from "../../graphql/mutations";
 import awsconfig from "../../aws-exports";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
 
 interface Props {
   setSubmitted: (bool: boolean) => void;
@@ -16,6 +18,7 @@ const CreateRoom: FC<Props> = ({ setSubmitted }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,11 +30,20 @@ const CreateRoom: FC<Props> = ({ setSubmitted }) => {
       setSubmitted(true);
       setOpen(false);
     } catch (error) {
-      console.error(error);
+      setError(error.errors[0].message);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  }, [error]);
+
   return (
     <>
       <Button onClick={() => setOpen(true)} type="button">
@@ -41,6 +53,12 @@ const CreateRoom: FC<Props> = ({ setSubmitted }) => {
         <div className={Classes.cr_modal_container}>
           <form onSubmit={handleSubmit}>
             <h2>Add a new room</h2>
+            {error && (
+              <Alert severity="error">
+                <AlertTitle>There has been an error adding the room</AlertTitle>
+                {error}
+              </Alert>
+            )}
             <label htmlFor="name">Room Name</label>
             <div className={Classes.field}>
               <input
