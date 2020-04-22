@@ -10,6 +10,7 @@ import { IRoom } from "../../utils/interfaces";
 import Button from "../../components/Button";
 import CreateRoom from "../../components/CreateRoom";
 import Alert from "@material-ui/lab/Alert";
+import { deleteRoom } from "../../graphql/mutations";
 
 const Rooms: FC = () => {
   const [rooms, setRooms] = useState<IRoom[] | null>(null);
@@ -27,6 +28,25 @@ const Rooms: FC = () => {
     if (newRooms?.length) {
       newRooms = newRooms?.sort(sortAlphabetically("name", order));
       setRooms([...newRooms]);
+    }
+  };
+
+  const handleDeleteRoom = async (id: string) => {
+    try {
+      await API.graphql(graphqlOperation(deleteRoom, { input: { id } }));
+      setDeleteRoomSubmitted(true);
+      let state = rooms;
+      if (state) {
+        state = state.filter((room: IRoom) => room.id !== id);
+        setRooms([...state]);
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -51,7 +71,7 @@ const Rooms: FC = () => {
       setTimeout(() => {
         setAddRoomSubmitted(false);
         setDeleteRoomSubmitted(false);
-      }, 5000);
+      }, 7000);
     }
   }, [addRoomSubmitted, deleteRoomSubmitted]);
 
@@ -86,7 +106,7 @@ const Rooms: FC = () => {
       {rooms &&
         rooms.map((room: IRoom) => (
           <RoomListItem
-            setSubmitted={setDeleteRoomSubmitted}
+            handleDelete={handleDeleteRoom}
             key={room.id}
             {...room}
           />

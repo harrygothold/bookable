@@ -8,7 +8,7 @@ interface Props {
 
 const Loading: FC<Props> = ({ loading }) => {
   return (
-    <Backdrop open={loading}>
+    <Backdrop style={{ zIndex: 1000 }} open={loading}>
       <CircularProgress color="inherit" />
     </Backdrop>
   );

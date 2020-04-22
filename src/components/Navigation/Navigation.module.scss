@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .nav {
   @media (max-width: 530px) {
@@ -6,6 +6,7 @@
   }
   height: 70px;
   width: 100%;
+  z-index: 100;
   padding: $spacing-large;
   display: flex;
   background: white;
