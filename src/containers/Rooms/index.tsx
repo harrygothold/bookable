@@ -16,6 +16,9 @@ const Rooms: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<string>("");
   const [addRoomSubmitted, setAddRoomSubmitted] = useState<boolean>(false);
+  const [deleteRoomSubmitted, setDeleteRoomSubmitted] = useState<boolean>(
+    false
+  );
   API.configure(awsconfig);
 
   const sort = (order: string): void => {
@@ -44,12 +47,13 @@ const Rooms: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (addRoomSubmitted) {
+    if (addRoomSubmitted || deleteRoomSubmitted) {
       setTimeout(() => {
         setAddRoomSubmitted(false);
+        setDeleteRoomSubmitted(false);
       }, 5000);
     }
-  }, [addRoomSubmitted]);
+  }, [addRoomSubmitted, deleteRoomSubmitted]);
 
   return (
     <div className={Classes.rooms_container}>
@@ -72,13 +76,21 @@ const Rooms: FC = () => {
         </Button>
         <CreateRoom setSubmitted={setAddRoomSubmitted} />
       </div>
-      {addRoomSubmitted && (
+      {(addRoomSubmitted || deleteRoomSubmitted) && (
         <Alert className={Classes.success_alert} severity="success">
-          Room Added Successfully
+          Room{" "}
+          {addRoomSubmitted ? "Added" : deleteRoomSubmitted ? "Deleted" : ""}{" "}
+          Successfully
         </Alert>
       )}
       {rooms &&
-        rooms.map((room: IRoom) => <RoomListItem key={room.id} {...room} />)}
+        rooms.map((room: IRoom) => (
+          <RoomListItem
+            setSubmitted={setDeleteRoomSubmitted}
+            key={room.id}
+            {...room}
+          />
+        ))}
     </div>
   );
 };
