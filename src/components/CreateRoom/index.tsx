@@ -1,49 +1,20 @@
-import React, { FC, useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import Button from "../Button";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import Modal from "@material-ui/core/Modal";
 import Classes from "./CreateRoom.module.scss";
-import API, { graphqlOperation } from "@aws-amplify/api";
-import { createRoom } from "../../graphql/mutations";
-import awsconfig from "../../aws-exports";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 
 interface Props {
-  setSubmitted: (bool: boolean) => void;
+  handleSubmit: (e: FormEvent<HTMLFormElement>, name: string) => void;
+  loading: boolean;
+  error: string;
 }
 
-const CreateRoom: FC<Props> = ({ setSubmitted }) => {
-  API.configure(awsconfig);
+const CreateRoom: FC<Props> = ({ loading, handleSubmit, error }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
-  const [error, setError] = useState<string>("");
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const room = { name };
-      await API.graphql(graphqlOperation(createRoom, { input: room }));
-      // @TODO update the rooms cache so changes are displayed immedietly
-      setSubmitted(true);
-      setOpen(false);
-    } catch (error) {
-      setError(error.errors[0].message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (error) {
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-    }
-  }, [error]);
-
   return (
     <>
       <Button onClick={() => setOpen(true)} type="button">
@@ -51,7 +22,13 @@ const CreateRoom: FC<Props> = ({ setSubmitted }) => {
       </Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className={Classes.cr_modal_container}>
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e, name);
+              setOpen(false);
+              setName("");
+            }}
+          >
             <h2>Add a new room</h2>
             {error && (
               <Alert severity="error">
@@ -64,6 +41,7 @@ const CreateRoom: FC<Props> = ({ setSubmitted }) => {
               <input
                 className={Classes.username}
                 name="name"
+                ref={(input) => input && input.focus()}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setName(e.target.value)
                 }

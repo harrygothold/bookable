@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, FormEvent } from "react";
 import Classes from "./Rooms.module.scss";
 import API, { graphqlOperation } from "@aws-amplify/api";
 import { listRooms } from "../../graphql/queries";
-import awsconfig from "../../aws-exports";
 import Loading from "../../components/Loading";
 import RoomListItem from "../../components/RoomListItem";
 import { sortAlphabetically } from "../../utils/sortAlphabetically";
@@ -10,17 +9,18 @@ import { IRoom } from "../../utils/interfaces";
 import Button from "../../components/Button";
 import CreateRoom from "../../components/CreateRoom";
 import Alert from "@material-ui/lab/Alert";
-import { deleteRoom } from "../../graphql/mutations";
+import { deleteRoom, createRoom } from "../../graphql/mutations";
+import { onCreateRoom } from "../../graphql/subscriptions";
 
 const Rooms: FC = () => {
   const [rooms, setRooms] = useState<IRoom[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<string>("");
   const [addRoomSubmitted, setAddRoomSubmitted] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const [deleteRoomSubmitted, setDeleteRoomSubmitted] = useState<boolean>(
     false
   );
-  API.configure(awsconfig);
 
   const sort = (order: string): void => {
     setSortOrder(order);
@@ -50,6 +50,37 @@ const Rooms: FC = () => {
     }
   };
 
+  const handleAddRoom = async (e: FormEvent<HTMLFormElement>, name: string) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const room = { name };
+      await API.graphql(graphqlOperation(createRoom, { input: room }));
+      setAddRoomSubmitted(true);
+    } catch (error) {
+      setError(error.errors[0].message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      //@ts-ignore
+      await API.graphql(graphqlOperation(onCreateRoom)).subscribe({
+        next: ({ value: { data } }: any) => {
+          const newRoom = {
+            ...data.onCreateRoom,
+          };
+          let state = rooms;
+          state?.push(newRoom);
+          return setRooms(state);
+        },
+        error: (error: Error) => console.log(error),
+      });
+    })();
+  }, [rooms]);
+
   useEffect(() => {
     const getRooms = async () => {
       setLoading(true);
@@ -71,9 +102,17 @@ const Rooms: FC = () => {
       setTimeout(() => {
         setAddRoomSubmitted(false);
         setDeleteRoomSubmitted(false);
-      }, 7000);
+      }, 5000);
     }
   }, [addRoomSubmitted, deleteRoomSubmitted]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  }, [error]);
 
   return (
     <div className={Classes.rooms_container}>
@@ -94,7 +133,11 @@ const Rooms: FC = () => {
         >
           Sort Z-A
         </Button>
-        <CreateRoom setSubmitted={setAddRoomSubmitted} />
+        <CreateRoom
+          error={error}
+          handleSubmit={handleAddRoom}
+          loading={loading}
+        />
       </div>
       {(addRoomSubmitted || deleteRoomSubmitted) && (
         <Alert className={Classes.success_alert} severity="success">
