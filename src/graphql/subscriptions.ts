@@ -1,5 +1,5 @@
-// tslint:disable
-// eslint-disable
+/* tslint:disable */
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const onCreateBooking = /* GraphQL */ `
@@ -9,20 +9,15 @@ export const onCreateBooking = /* GraphQL */ `
       room {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       bookedByUser {
         id
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       bookingTime
     }
@@ -35,20 +30,15 @@ export const onUpdateBooking = /* GraphQL */ `
       room {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       bookedByUser {
         id
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       bookingTime
     }
@@ -61,20 +51,15 @@ export const onDeleteBooking = /* GraphQL */ `
       room {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       bookedByUser {
         id
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       bookingTime
     }
@@ -85,18 +70,11 @@ export const onCreateRoom = /* GraphQL */ `
     onCreateRoom {
       id
       name
+      hasScreen
+      numberOfPeople
+      disabledAccess
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -107,18 +85,11 @@ export const onUpdateRoom = /* GraphQL */ `
     onUpdateRoom {
       id
       name
+      hasScreen
+      numberOfPeople
+      disabledAccess
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -129,18 +100,11 @@ export const onDeleteRoom = /* GraphQL */ `
     onDeleteRoom {
       id
       name
+      hasScreen
+      numberOfPeople
+      disabledAccess
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -155,16 +119,6 @@ export const onCreateUser = /* GraphQL */ `
       password
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -179,16 +133,6 @@ export const onUpdateUser = /* GraphQL */ `
       password
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -203,16 +147,6 @@ export const onDeleteUser = /* GraphQL */ `
       password
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }

@@ -7,7 +7,7 @@ import RoomListItem from "../../components/RoomListItem";
 import { sortAlphabetically } from "../../utils/sortAlphabetically";
 import { IRoom } from "../../utils/interfaces";
 import Button from "../../components/Button";
-import CreateRoom from "../../components/CreateRoom";
+import CreateRoom, { IFormData } from "../../components/CreateRoom";
 import Alert from "@material-ui/lab/Alert";
 import { deleteRoom, createRoom } from "../../graphql/mutations";
 import { onCreateRoom } from "../../graphql/subscriptions";
@@ -50,11 +50,18 @@ const Rooms: FC = () => {
     }
   };
 
-  const handleAddRoom = async (e: FormEvent<HTMLFormElement>, name: string) => {
+  const handleAddRoom = async (
+    e: FormEvent<HTMLFormElement>,
+    formData: IFormData
+  ) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const room = { name };
+      const room = {
+        ...formData,
+        hasScreen: !!+formData.hasScreen,
+        disabledAccess: !!+formData.disabledAccess,
+      };
       await API.graphql(graphqlOperation(createRoom, { input: room }));
       setAddRoomSubmitted(true);
     } catch (error) {

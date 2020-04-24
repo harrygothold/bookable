@@ -1,5 +1,5 @@
-// tslint:disable
-// eslint-disable
+/* tslint:disable */
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const createBooking = /* GraphQL */ `
@@ -12,20 +12,15 @@ export const createBooking = /* GraphQL */ `
       room {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       bookedByUser {
         id
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       bookingTime
     }
@@ -41,20 +36,15 @@ export const updateBooking = /* GraphQL */ `
       room {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       bookedByUser {
         id
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       bookingTime
     }
@@ -70,20 +60,15 @@ export const deleteBooking = /* GraphQL */ `
       room {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       bookedByUser {
         id
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       bookingTime
     }
@@ -97,18 +82,11 @@ export const createRoom = /* GraphQL */ `
     createRoom(input: $input, condition: $condition) {
       id
       name
+      hasScreen
+      numberOfPeople
+      disabledAccess
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -122,18 +100,11 @@ export const updateRoom = /* GraphQL */ `
     updateRoom(input: $input, condition: $condition) {
       id
       name
+      hasScreen
+      numberOfPeople
+      disabledAccess
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -147,18 +118,11 @@ export const deleteRoom = /* GraphQL */ `
     deleteRoom(input: $input, condition: $condition) {
       id
       name
+      hasScreen
+      numberOfPeople
+      disabledAccess
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -176,16 +140,6 @@ export const createUser = /* GraphQL */ `
       password
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -203,16 +157,6 @@ export const updateUser = /* GraphQL */ `
       password
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -230,16 +174,6 @@ export const deleteUser = /* GraphQL */ `
       password
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }

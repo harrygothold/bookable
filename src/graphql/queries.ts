@@ -1,5 +1,5 @@
-// tslint:disable
-// eslint-disable
+/* tslint:disable */
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const getBooking = /* GraphQL */ `
@@ -9,20 +9,15 @@ export const getBooking = /* GraphQL */ `
       room {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       bookedByUser {
         id
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       bookingTime
     }
@@ -37,16 +32,6 @@ export const listBookings = /* GraphQL */ `
     listBookings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
       nextToken
@@ -58,18 +43,11 @@ export const getRoom = /* GraphQL */ `
     getRoom(id: $id) {
       id
       name
+      hasScreen
+      numberOfPeople
+      disabledAccess
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -85,10 +63,9 @@ export const listRooms = /* GraphQL */ `
       items {
         id
         name
-        bookings {
-          id
-          bookingTime
-        }
+        hasScreen
+        numberOfPeople
+        disabledAccess
       }
       nextToken
     }
@@ -103,16 +80,6 @@ export const getUser = /* GraphQL */ `
       password
       bookings {
         id
-        room {
-          id
-          name
-        }
-        bookedByUser {
-          id
-          name
-          email
-          password
-        }
         bookingTime
       }
     }
@@ -130,10 +97,6 @@ export const listUsers = /* GraphQL */ `
         name
         email
         password
-        bookings {
-          id
-          bookingTime
-        }
       }
       nextToken
     }

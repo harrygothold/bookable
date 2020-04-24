@@ -1,0 +1,15 @@
+projects:
+  bookable:
+    schemaPath: amplify/backend/api/bookable/build/schema.graphql
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: GraphQLAPI.ts
+        docsFilePath: src/graphql
+        region: eu-west-1
+        apiId: null
+        maxDepth: 2

@@ -24,6 +24,23 @@
     button {
       width: 50%;
     }
+    .select {
+      width: 100%;
+      margin: 20px 0;
+      padding: 0 55px;
+      select {
+        width: 100%;
+      }
+    }
+    .radio {
+      margin: 10px 0;
+      label {
+        margin-left: 60px;
+      }
+      span {
+        margin: 10px;
+      }
+    }
     .field {
       width: 80%;
       display: flex;
