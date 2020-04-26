@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Navigation from "./components/Navigation";
 import Rooms from "./containers/Rooms";
 import Admin from "./containers/Admin";
+import RoomPage from "./containers/RoomPage";
 
 const Routes = () => {
   return (
@@ -27,6 +28,7 @@ const Routes = () => {
         <ProtectedRoute path="/admin" exact component={Admin} />
         <ProtectedRoute path="/admin/rooms" component={Rooms} />
         <ProtectedRoute path="/dashboard" exact component={Dashboard} />
+        <ProtectedRoute path="/room/:id" exact component={RoomPage} />
       </Switch>
     </BrowserRouter>
   );

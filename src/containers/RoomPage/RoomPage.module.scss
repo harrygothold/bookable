@@ -1,0 +1,23 @@
+@import "../../styles/variables.scss";
+
+.container {
+  padding-top: 100px;
+  display: flex;
+  .info {
+    width: 20%;
+    border-right: 1px solid black;
+    margin-left: $spacing-large;
+    &_list {
+      font-size: 20px;
+      &_item {
+        margin: 10px 0;
+      }
+    }
+  }
+  button {
+    margin-top: $spacing-small;
+  }
+  .calender {
+    width: 100%;
+  }
+}

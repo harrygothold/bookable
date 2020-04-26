@@ -4,6 +4,10 @@ import Classes from "./Landing.module.scss";
 
 const LandingPage: FC = () => {
   const history = useHistory();
+  const token = localStorage.getItem("token");
+  if (token) {
+    history.push("/dashboard");
+  }
 
   return (
     <div className={Classes.hero}>
