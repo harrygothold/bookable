@@ -6,20 +6,12 @@ export const getBooking = /* GraphQL */ `
   query GetBooking($id: ID!) {
     getBooking(id: $id) {
       id
-      room {
-        id
-        name
-        hasScreen
-        numberOfPeople
-        disabledAccess
-      }
-      bookedByUser {
-        id
-        name
-        email
-        password
-      }
-      bookingTime
+      room
+      bookedByUser
+      title
+      attendees
+      start
+      end
     }
   }
 `;
@@ -32,7 +24,12 @@ export const listBookings = /* GraphQL */ `
     listBookings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
       nextToken
     }
@@ -48,7 +45,12 @@ export const getRoom = /* GraphQL */ `
       disabledAccess
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }
@@ -80,7 +82,12 @@ export const getUser = /* GraphQL */ `
       password
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }

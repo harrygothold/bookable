@@ -6,20 +6,12 @@ export const onCreateBooking = /* GraphQL */ `
   subscription OnCreateBooking {
     onCreateBooking {
       id
-      room {
-        id
-        name
-        hasScreen
-        numberOfPeople
-        disabledAccess
-      }
-      bookedByUser {
-        id
-        name
-        email
-        password
-      }
-      bookingTime
+      room
+      bookedByUser
+      title
+      attendees
+      start
+      end
     }
   }
 `;
@@ -27,20 +19,12 @@ export const onUpdateBooking = /* GraphQL */ `
   subscription OnUpdateBooking {
     onUpdateBooking {
       id
-      room {
-        id
-        name
-        hasScreen
-        numberOfPeople
-        disabledAccess
-      }
-      bookedByUser {
-        id
-        name
-        email
-        password
-      }
-      bookingTime
+      room
+      bookedByUser
+      title
+      attendees
+      start
+      end
     }
   }
 `;
@@ -48,20 +32,12 @@ export const onDeleteBooking = /* GraphQL */ `
   subscription OnDeleteBooking {
     onDeleteBooking {
       id
-      room {
-        id
-        name
-        hasScreen
-        numberOfPeople
-        disabledAccess
-      }
-      bookedByUser {
-        id
-        name
-        email
-        password
-      }
-      bookingTime
+      room
+      bookedByUser
+      title
+      attendees
+      start
+      end
     }
   }
 `;
@@ -75,7 +51,12 @@ export const onCreateRoom = /* GraphQL */ `
       disabledAccess
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }
@@ -90,7 +71,12 @@ export const onUpdateRoom = /* GraphQL */ `
       disabledAccess
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }
@@ -105,7 +91,12 @@ export const onDeleteRoom = /* GraphQL */ `
       disabledAccess
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }
@@ -119,7 +110,12 @@ export const onCreateUser = /* GraphQL */ `
       password
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }
@@ -133,7 +129,12 @@ export const onUpdateUser = /* GraphQL */ `
       password
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }
@@ -147,7 +148,12 @@ export const onDeleteUser = /* GraphQL */ `
       password
       bookings {
         id
-        bookingTime
+        room
+        bookedByUser
+        title
+        attendees
+        start
+        end
       }
     }
   }

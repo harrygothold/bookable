@@ -78,7 +78,7 @@ const RoomPage = () => {
         )}
       </div>
       <div className={Classes.calender}>
-        <Calendar />
+        <Calendar room={room} />
       </div>
     </div>
   );
