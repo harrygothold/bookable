@@ -72,9 +72,12 @@ const Rooms: FC = () => {
   };
 
   useEffect(() => {
+    let createRoomListener: any;
     (async () => {
-      //@ts-ignore
-      await API.graphql(graphqlOperation(onCreateRoom)).subscribe({
+      createRoomListener = await API.graphql(
+        graphqlOperation(onCreateRoom)
+        //@ts-ignore
+      ).subscribe({
         next: ({ value: { data } }: any) => {
           const newRoom = {
             ...data.onCreateRoom,
@@ -85,6 +88,7 @@ const Rooms: FC = () => {
         },
         error: (error: Error) => console.log(error),
       });
+      return () => createRoomListener.unsubscribe();
     })();
   }, [rooms]);
 

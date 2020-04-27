@@ -199,9 +199,12 @@ const MyCalender: FC<Props> = ({ room }) => {
 
   useEffect(() => {
     // Subscription for creating a booking - automatically returns the new event so it can be viewed immedietly
+    let createBookingListener: any;
     (async () => {
-      //@ts-ignore
-      await API.graphql(graphqlOperation(onCreateBooking)).subscribe({
+      createBookingListener = await API.graphql(
+        graphqlOperation(onCreateBooking)
+        //@ts-ignore
+      ).subscribe({
         next: ({ value: { data } }: any) => {
           const obj = {
             ...data.onCreateBooking,
@@ -214,6 +217,7 @@ const MyCalender: FC<Props> = ({ room }) => {
         },
         error: (error: Error) => console.log(error),
       });
+      return () => createBookingListener.unsubscribe();
     })();
   }, [events]);
 
