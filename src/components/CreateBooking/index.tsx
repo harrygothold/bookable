@@ -6,6 +6,10 @@ import Button from "../Button";
 interface Props {
   bookingData: IBooking;
   roomName: string;
+  error: {
+    error: boolean;
+    errorMsg: string;
+  };
   setBookingData: (data: IBooking) => void;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
@@ -15,6 +19,7 @@ const CreateBooking: FC<Props> = ({
   setBookingData,
   roomName,
   handleSubmit,
+  error,
 }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,6 +30,7 @@ const CreateBooking: FC<Props> = ({
   };
   return (
     <form onSubmit={handleSubmit}>
+      {error.error && <p>{error.errorMsg}</p>}
       <div className={Classes.field}>
         <input
           className={Classes.username}

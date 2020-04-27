@@ -19,11 +19,26 @@ interface ModalSettings {
   modalType: "view" | "add" | string;
 }
 
+interface IError {
+  error: boolean;
+  errorMsg: string;
+}
+
 interface ClickedEvent {
   start: DateString;
   end: DateString;
   title: string;
   bookedByUser: string;
+}
+
+interface IEvent {
+  id: string;
+  room: string;
+  bookedByUser: string;
+  title: string;
+  attendees: string[];
+  start: DateString;
+  end: DateString;
 }
 
 interface Props {
@@ -41,12 +56,16 @@ const initialState: IBooking = {
 
 const MyCalender: FC<Props> = ({ room }) => {
   const localizer = momentLocalizer(moment); // Something required for the Calender component
+  const [error, setError] = useState<IError>({
+    error: false,
+    errorMsg: "",
+  });
   const [modalSettings, setModalSettings] = useState<ModalSettings>({
     showModal: false,
     modalType: "",
   });
   // State for the list of events from DynamoDB
-  const [events, setEvents] = useState<any>([]);
+  const [events, setEvents] = useState<IEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   // Handles state for creating a booking
   const [bookingData, setBookingData] = useState<IBooking>(initialState);
@@ -105,6 +124,22 @@ const MyCalender: FC<Props> = ({ room }) => {
     });
   };
 
+  // Function that checks to see if there a conflict between dates
+  const checkConflict = (start: DateString, end: DateString): boolean => {
+    const startIndex: boolean =
+      events.findIndex((event: IEvent) =>
+        moment(start).isBetween(event.start, event.end)
+      ) > -1;
+    const endIndex: boolean =
+      events.findIndex((event: IEvent) =>
+        moment(end).isBetween(event.start, event.end)
+      ) > -1;
+    if (startIndex || endIndex) {
+      return true;
+    }
+    return false;
+  };
+
   // Submit function for creating a booking
   const handleCreateBooking = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -114,16 +149,25 @@ const MyCalender: FC<Props> = ({ room }) => {
         ...bookingData,
         room: room.name,
       };
-      await API.graphql(graphqlOperation(createBooking, { input: booking }));
-      setBookingData(initialState);
+      if (checkConflict(booking.start, booking.end)) {
+        setError((prev) => ({
+          ...prev,
+          error: true,
+          errorMsg:
+            "Oops! Another event is occuring at that time. Please try another time or room",
+        }));
+      } else {
+        await API.graphql(graphqlOperation(createBooking, { input: booking }));
+        setBookingData(initialState);
+        setModalSettings({
+          showModal: false,
+          modalType: "",
+        });
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
-      setModalSettings({
-        showModal: false,
-        modalType: "",
-      });
     }
   };
 
@@ -183,6 +227,7 @@ const MyCalender: FC<Props> = ({ room }) => {
               bookingData={bookingData}
               setBookingData={setBookingData}
               handleSubmit={handleCreateBooking}
+              error={error}
             />
           </div>
         );
