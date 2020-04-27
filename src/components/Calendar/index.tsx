@@ -14,6 +14,11 @@ import { onCreateBooking } from "../../graphql/subscriptions";
 
 type DateString = Date | string;
 
+interface ModalSettings {
+  showModal: boolean;
+  modalType: "view" | "add" | string;
+}
+
 interface ClickedEvent {
   start: DateString;
   end: DateString;
@@ -35,27 +40,38 @@ const initialState: IBooking = {
 };
 
 const MyCalender: FC<Props> = ({ room }) => {
-  const localizer = momentLocalizer(moment);
-  const [showAddNewModal, setShowAddNewModal] = useState<boolean>(false);
+  const localizer = momentLocalizer(moment); // Something required for the Calender component
+  const [modalSettings, setModalSettings] = useState<ModalSettings>({
+    showModal: false,
+    modalType: "",
+  });
+  // State for the list of events from DynamoDB
   const [events, setEvents] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [showEventModal, setShowEventModal] = useState<boolean>(false);
+  // Handles state for creating a booking
   const [bookingData, setBookingData] = useState<IBooking>(initialState);
+  //State for the clicked event
   const [clickedEvent, setClickedEvent] = useState<ClickedEvent>({
     start: "",
     end: "",
     title: "",
     bookedByUser: "",
   });
+
+  // Converts the date to a human readable date so can be viewed on the modal
   const handleDate = (date: DateString): string => {
     const formattedDate = moment(date).format("LLLL");
     return formattedDate;
   };
 
+  // Handles the clicking of an event already on the calender - returns the event info
   const handleSelectEvent = (event: ClickedEvent) => {
     const start = handleDate(event.start);
     const end = handleDate(event.end);
-    setShowEventModal(true);
+    setModalSettings({
+      showModal: true,
+      modalType: "view",
+    });
     setClickedEvent({
       ...clickedEvent,
       ...event,
@@ -64,25 +80,32 @@ const MyCalender: FC<Props> = ({ room }) => {
     });
   };
 
+  // Parses the date from the clicked event so it can be used to pre-populate the datetime input field
   const formatDateToString = (date: string): string => {
-    const arr = date.split("");
+    const formattedDate = moment(date).format();
+    const arr = formattedDate.split("");
     arr.splice(16);
     const str = arr.join("");
     return str;
   };
 
+  // Handles the click of an empty slot - returns booking form
   const handleClickedSlot = (event: any) => {
-    const start = formatDateToString(moment(event.start).format());
-    const end = formatDateToString(moment(event.end).format());
+    const start = formatDateToString(event.start);
+    const end = formatDateToString(event.end);
     setBookingData({
       ...bookingData,
       room: room.name,
       start: start,
       end: end,
     });
-    setShowAddNewModal(true);
+    setModalSettings({
+      showModal: true,
+      modalType: "add",
+    });
   };
 
+  // Submit function for creating a booking
   const handleCreateBooking = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -97,11 +120,15 @@ const MyCalender: FC<Props> = ({ room }) => {
       console.log(error);
     } finally {
       setLoading(false);
-      setShowAddNewModal(false);
+      setModalSettings({
+        showModal: false,
+        modalType: "",
+      });
     }
   };
 
   useEffect(() => {
+    // Gets events from dynamoDB
     const getData = async () => {
       if (room.name) {
         const { data }: any = await API.graphql(
@@ -127,6 +154,7 @@ const MyCalender: FC<Props> = ({ room }) => {
   }, [room]);
 
   useEffect(() => {
+    // Subscription for creating a booking - automatically returns the new event so it can be viewed immedietly
     (async () => {
       //@ts-ignore
       await API.graphql(graphqlOperation(onCreateBooking)).subscribe({
@@ -144,6 +172,33 @@ const MyCalender: FC<Props> = ({ room }) => {
       });
     })();
   }, [events]);
+
+  const renderModalContent = () => {
+    switch (modalSettings.modalType) {
+      case "add":
+        return (
+          <div className={Classes.event_modal_new}>
+            <CreateBooking
+              roomName={room.name}
+              bookingData={bookingData}
+              setBookingData={setBookingData}
+              handleSubmit={handleCreateBooking}
+            />
+          </div>
+        );
+      case "view":
+        return (
+          <div className={Classes.event_modal}>
+            <p>Start: {clickedEvent.start}</p>
+            <p>End: {clickedEvent.end}</p>
+            <p>Title: {clickedEvent.title}</p>
+            <p>Booked By: {clickedEvent.bookedByUser}</p>
+          </div>
+        );
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -164,23 +219,11 @@ const MyCalender: FC<Props> = ({ room }) => {
           />
         )}
       </div>
-      <Modal open={showEventModal} onClose={() => setShowEventModal(false)}>
-        <div className={Classes.event_modal}>
-          <p>Start: {clickedEvent.start}</p>
-          <p>End: {clickedEvent.end}</p>
-          <p>Title: {clickedEvent.title}</p>
-          <p>Booked By: {clickedEvent.bookedByUser}</p>
-        </div>
-      </Modal>
-      <Modal open={showAddNewModal} onClose={() => setShowAddNewModal(false)}>
-        <div className={Classes.event_modal_new}>
-          <CreateBooking
-            roomName={room.name}
-            bookingData={bookingData}
-            setBookingData={setBookingData}
-            handleSubmit={handleCreateBooking}
-          />
-        </div>
+      <Modal
+        open={modalSettings.showModal}
+        onClose={() => setModalSettings({ showModal: false, modalType: "" })}
+      >
+        <>{renderModalContent()}</>
       </Modal>
     </>
   );
